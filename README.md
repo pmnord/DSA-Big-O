@@ -658,11 +658,11 @@ Take your solutions from the recursive exercises that you completed in the previ
 ```
 1. O(n)
 2. O(n)
-3. 
-4.
-5.
-6.
-7.
+3. O(n)
+4. O(n)
+5. O(n)
+6. O(2n)
+7. O(n)
 ```
 
 
