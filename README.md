@@ -1,5 +1,13 @@
-# Big O notation
+<div align="center">
+<h1> Big O notation</h1>
+
+<details>
+<summary><b>Objective</b></summary>
+<p>
 Objective: By the end of this checkpoint, you can measure algorithm performance with Big O.
+<p>
+</details>
+</div>
 
 An algorithm is a clearly defined set of instructions to solve a problem. For any given problem, there is usually a range of possible solutions, and we can compare the performance of competing algorithmic solutions to the problem. In this checkpoint, we'll learn to measure the performance of different algorithms using Big O notation.
 
@@ -488,22 +496,176 @@ Output:
 Derive an algorithm to solve the Tower of Hanoi puzzle.
 Implement your algorithm using recursion. Your program should display each movement of the disk from one rod to another.
 ```js
+const rods = {
+  "A": [3,2,1],
+  "B": [],
+  "C": []
+};
+let moves = 0;
 
+const displayRods = (rods) => {
+  let newRods = Object.keys(rods);
+  newRods.forEach(rod => console.log(rod + ": " + rods[rod]));
+
+  console.log(`${moves} moves`);
+  moves++;
+  console.log("\n");
+}
+displayRods(rods);
+
+const towerOfHanoi = (n, sourceRod, destinationRod, bufferRod) => {
+
+  // Our base case is implicitly when n, the height of our stack of disks, gets down to zero.
+
+  if (n >= 1) { 
+
+    towerOfHanoi(n - 1, sourceRod, bufferRod, destinationRod);
+
+    console.log(`Move disk ${n} from ${sourceRod} to ${destinationRod}`);  
+
+    rods[bufferRod].push(rods[sourceRod].pop())
+    rods[destinationRod].push(rods[bufferRod].pop())
+
+    displayRods(rods);
+
+    towerOfHanoi(n - 1, bufferRod, destinationRod, sourceRod);
+
+  }
+  return;
+}
+towerOfHanoi(3, "A", "C", "B");
 ```
 If you are given 5 disks, how do the rods look like after 7 recursive calls?
->  
+
+```js
+Move disk 1 from A to C
+A: 5,4
+B: 
+C: 3,2,1
+7 moves
+```
 
 How many moves are needed to complete the puzzle with 3 disks? with 4 disks? with 5 disks?
-> 
+> 7, 15, and 31
 
 What is the runtime of your algorithm?
-> 
+> O(2<sup>n</sup>) exponential The number of steps doubles (plus one) for every disk added.
 
 ## 12. Iterative version
 Solve the drills 1 - 7 from your previous checkpoint (Recursion) iteratively.
 
+```js
+// 1.
+function countSheep(n) {
+  let counter = n;
+
+  while (n > 0) {
+    console.log(`${n}: Another sheep jumps over the fence`);
+    n--;
+  }
+
+  console.log(`All sheep jumped over the fence`);
+}
+// O(n) linear. We add one step for each additional sheep.
+
+// 2.
+function powerCalculator(base, exponent) {
+  result = base;
+  while (exponent > 1) {
+    result *= base;
+    exponent--;
+  }
+  return result;
+}
+// O(n) linear. We add one step for each additional number in the exponent.
+
+// 3.
+function reverseString(string) {
+  let newString = '';
+
+  for (let i = string.length - 1; i >= 0; i--) {
+    newString += string.charAt(i)
+  }
+
+  return newString;
+}
+// O(n). For each char we add, our for loop iterates one more time.
+
+// 4.
+function nthTriangularNumber(n) {
+  let result = 1;
+
+  for (let i = 1; i < n; i++) {
+    result += i + 1;
+  }
+
+  return result;
+}
+// O(n). Basically because we have a for loop that goes until n.
+
+// 5.
+function stringSplitter(string, splitter) {
+  let result = []
+
+  while (string.indexOf(splitter) >= 0) {
+    let splitterIndex = string.indexOf(splitter);
+
+    result.push(string.substring(0, splitterIndex));
+    string = string.substring(splitterIndex + 1);
+  }
+  result.push(string) // Get our last section of string into the array after the splitter is no longer present.
+  
+  return result;
+}
+// O(n) where n is the number of splitter chars in the string.
+
+// 6.
+function fibonacci(n) {
+  if (n <= 2) {return 1}
+
+  let counter = n;
+  let result;
+  let firstPrevious = 1;
+  let secondPrevious = 1;
+
+  while (counter > 0) {
+    result = firstPrevious + secondPrevious;
+
+    secondPrevious = firstPrevious;
+    firstPrevious = result;
+
+    counter--;
+  }
+
+  return result;
+}
+// O(n)
+
+
+// 7.
+function factorial(n) {
+  let result = 1;
+  for (let i = n; i > 0; i--) {
+    result *= i;
+  }
+  return result;
+}
+// O(n)
+```
+
 ## 13. Recursive Big O
 Take your solutions from the recursive exercises that you completed in the previous checkpoint and identify the time complexities (big O) of each of them.
+```
+1. O(n)
+2. O(n)
+3. 
+4.
+5.
+6.
+7.
+```
+
 
 ## 14. Iterative Big O
 Take your solutions from the iterative exercises today and identify the time complexities (big O) of each of them.
+> Listed above with the solutions
